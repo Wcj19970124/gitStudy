@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!-- Weex依赖查询工具依赖查询页 -->
+<html>
+
+<head>
+    <!-- 页面title信息 -->
+    <title>Weex依赖查询工具</title>
+    <!-- 页面js引入 -->
+    <script src="./js/base/vue.min.js"></script>
+    <script src="./js/base/element.js"></script>
+    <script src="./js/base/echarts.min.js"></script>
+    <script src="./js/base/jquery-3.5.1.min.js"></script>
+    <!-- 页面css引入 -->
+    <link href="./css/base/element.css" rel="stylesheet" type="text/css">
+    <link href="./css/page/query.css" rel="stylesheet" type="text/css" charset="utf-8">
+</head>
+
+<body>
+    <div id="query" style="display: none;" :style="{display: 'block'}">
+        <!-- Weex页面/公共Component/公共JS关系图 -->
+        <el-card class="box-card" style="width: 100%" shadow="hover">
+            <div slot="header" class="clearfix">
+                <span class="el-icon-s-data"></span>
+                <span>Weex页面-公共组件-公共JS关系报表 【实时】</span>
+            </div>
+            <template>
+                <div id="echart" style="width: 100%; height: 620px"></div>
+            </template>
+            <!-- 关系图表 -->
+        </el-card>
+        <el-card class="box-card" style="margin-top: 15px" shadow="hover">
+            <!-- 搜索栏 -->
+            <el-form :inline="true" class="demo-form-inline" size="mini">
+                <el-form-item label="Weex页面">
+                    <el-select v-model="weex" clearable filterable placeholder="请选择">
+                        <el-option v-for="item in cacheWeex" :key="item.weex" :label="item.weex" :value="item.weex">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="公共组件">
+                    <el-select v-model="component" clearable filterable placeholder="请选择">
+                        <el-option v-for="item in cacheComponent" :key="item.component" :label="item.component"
+                            :value="item.component">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="公共JS">
+                    <el-select v-model="js" clearable filterable placeholder="请选择">
+                        <el-option v-for="item in cacheJs" :key="item.js" :label="item.js" :value="item.js">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="onSubmit">查询</el-button>
+                </el-form-item>
+                <!-- 未被引用的公共组件/JS -->
+                <el-form-item>
+                    <el-popover placement="right" trigger="hover">
+                        <el-table :data="notRequireComponent" height="350">
+                            <el-table-column label="未被引用组件" width="350">
+                                <template slot-scope="scope">{{ scope.row }}</template>
+                            </el-table-column>
+                        </el-table>
+                        <el-button slot="reference" size="mini">未被引用公共组件</el-button>
+                    </el-popover>
+                </el-form-item>
+                <el-form-item>
+                    <el-popover placement="right" trigger="hover">
+                        <el-table :data="notRequireJs" height="350">
+                            <el-table-column label="未被引用JS" width="350">
+                                <template slot-scope="scope">{{ scope.row }}</template>
+                            </el-table-column>
+                        </el-table>
+                        <el-button slot="reference" size="mini">未被引用公共JS</el-button>
+                    </el-popover>
+                </el-form-item>
+                <el-form-item>
+                    <div style="color: red">
+                        注意：过滤条件优先级【Weex > (Component = Js)】
+                    </div>
+                </el-form-item>
+            </el-form>
+            <!-- 分割线 -->
+            <el-divider></el-divider>
+            <!-- 数据表格 -->
+            <el-table :data="page.List" border align="center" style="width: 100%" stripe="true"
+                highlight-current-row="true">
+                <el-table-column type="index" :index="indexMethod" label="序号" width="100">
+                </el-table-column>
+
+                <el-table-column show-overflow-tooltip prop="component" label="依赖组件">
+                </el-table-column>
+                <el-table-column show-overflow-tooltip prop="js" label="依赖JS">
+                </el-table-column>
+                <el-table-column prop="weex" label="Weex页面"> </el-table-column>
+            </el-table>
+            <!-- 分页 -->
+            <div style="margin-top: 10px; margin-left: -10px">
+                <el-pagination background layout="sizes,prev, pager, next,jumper" :total="page.TotalCount"
+                    :page-sizes="[5]" :page-size="page.PageSize" @current-change="handleCurrentChange"
+                    @size-change="handleSizeChange">
+                </el-pagination>
+            </div>
+        </el-card>
+    </div>
+    <script src="./js/page/query.js"></script>
+</body>
+
+</html>

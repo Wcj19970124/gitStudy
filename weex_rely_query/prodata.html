@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- Weex依赖查询工具首页-项目概览页面 -->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 页面title信息 -->
+    <title>Weex依赖查询工具</title>
+    <!-- 页面js引入 -->
+    <script src="./js/base/vue.min.js"></script>
+    <script src="./js/base/element.js"></script>
+    <script src="./js/base/echarts.min.js"></script>
+    <script src="./js/base/v-charts.js"></script>
+    <script src="./js/base/jquery-3.5.1.min.js"></script>
+    <!-- 页面css引入 -->
+    <link href="./css/base/element.css" type="text/css" rel="stylesheet">
+    <link href="./css/page/prodata.css" type="text/css" rel="stylesheet" charset="utf-8">
+</head>
+
+<body>
+    <div id="index" style="display: none;" :style="{display: 'block'}">
+        <div class="home-container">
+            <div class="component-container">
+                <!-- 现有Weex页面展示 -->
+                <el-card class="box-card" style="width: 33%" shadow="hover">
+                    <div slot="header" class="clearfix">
+                        <span class="el-icon-s-grid"></span>
+                        <span>现有Weex页面 【实时】</span>
+                    </div>
+                    <el-table :data="weex.filter(
+                        (data) =>
+                          !searchWeex ||
+                          data.weex.toLowerCase().includes(searchWeex.toLowerCase())
+                      )" style="width: 100%" height="350">
+                        <el-table-column label="序号" prop="id"> </el-table-column>
+                        <el-table-column label="Weex页面" prop="weex"> </el-table-column>
+                        <el-table-column align="right">
+                            <template slot="header" slot-scope="scope">
+                                <el-input v-model="searchWeex" size="mini" placeholder="输入关键字搜索" />
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-card>
+                <!-- 现有公共组件页面展示 -->
+                <el-card class="box-card" style="width: 33%" shadow="hover">
+                    <div slot="header" class="clearfix">
+                        <span class="el-icon-s-grid"></span>
+                        <span>现有公共组件 【实时】</span>
+                    </div>
+                    <el-table :data="filterComponent()" style="width: 100%" height="350">
+                        <el-table-column label="序号" prop="id" width="100">
+                        </el-table-column>
+                        <el-table-column label="公共组件" prop="component"> </el-table-column>
+                        <el-table-column align="right">
+                            <template slot="header" slot-scope="scope">
+                                <el-input v-model="searchComponent" size="mini" placeholder="输入关键字搜索" />
+                            </template>
+                        </el-table-column>
+                        <el-table-column align="right">
+                            <template slot="header" slot-scope="scope">
+                                <el-select v-model="searchComponentDir" filterable clearable placeholder="按目录过滤"
+                                    size="mini">
+                                    <el-option v-for="item in componentDir" :key="item" :label="item" :value="item">
+                                    </el-option>
+                                </el-select>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-card>
+                <!-- 现有公共JS页面展示 -->
+                <el-card class="box-card" style="width: 33%" shadow="hover">
+                    <div slot="header" class="clearfix">
+                        <span class="el-icon-s-grid"></span>
+                        <span>现有公共JS 【实时】</span>
+                    </div>
+                    <el-table :data="filterJs()" style="width: 100%" height="350">
+                        <el-table-column label="序号" prop="id" width="100">
+                        </el-table-column>
+                        <el-table-column label="公共JS" prop="js"> </el-table-column>
+                        <el-table-column align="right">
+                            <template slot="header" slot-scope="scope">
+                                <el-input v-model="searchJs" size="mini" placeholder="输入关键字搜索" />
+                            </template>
+                        </el-table-column>
+                        <el-table-column align="right">
+                            <template slot="header" slot-scope="scope">
+                                <el-select v-model="searchJsDir" filterable clearable placeholder="按目录过滤" size="mini">
+                                    <el-option v-for="item in jsDir" :key="item" :label="item" :value="item">
+                                    </el-option>
+                                </el-select>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-card>
+            </div>
+            <!-- Weex页面依赖公共组件/JS数量报表 -->
+            <el-card class="box-card" style="width: 100%; margin: 20px 0px 0px 0px" shadow="hover">
+                <div slot="header" class="clearfix">
+                    <span class="el-icon-s-data"></span>
+                    <span>Weex页面依赖公共组件/JS数量报表 【实时】</span>
+                </div>
+                <el-button type="primary" @click="changeType" size="mini" style="margin: 0px 0px 0px 25px">柱状图/折线图
+                </el-button>
+                <ve-chart :data="chartData" :extend="extend" height="600px" :settings="chartSettings"></ve-chart>
+            </el-card>
+        </div>
+    </div>
+    <script src="./js/page/prodata.js"></script>
+</body>
+
+</html>

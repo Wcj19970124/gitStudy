@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- Weex依赖查询工具首页-项目概览页面 -->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 页面title信息 -->
+    <title>Weex依赖查询工具</title>
+    <!-- 页面js引入 -->
+    <script src="./js/base/vue.min.js"></script>
+    <script src="./js/base/element.js"></script>
+    <script src="./js/base/echarts.min.js"></script>
+    <script src="./js/base/v-charts.js"></script>
+    <script src="./js/base/jquery-3.5.1.min.js"></script>
+    <!-- 页面css引入 -->
+    <link href="./css/base/element.css" rel="stylesheet">
+    <link href="./css/page/index.css" type="text/css" rel="stylesheet" charset="utf-8">
+</head>
+
+<body>
+    <div id="app" style="display: none;" :style="{display: 'block'}">
+        <el-container>
+            <el-header>
+                <div class="header-title">Weex查询工具</div>
+            </el-header>
+            <el-container>
+                <el-aside>
+                    <el-scrollbar style="height: 100%;width: 100%;">
+                        <el-row class="tac">
+                            <el-col>
+                                <el-menu background-color="#393D49" text-color="#fff" class="el-menu-vertical-demo"
+                                    active-text-color="#ffd04b" style="width: 220px;">
+                                    <el-menu-item index="/index">
+                                        <i class="el-icon-menu"></i>
+                                        <span><a href="./prodata.html" target="my-frame">首页</a></span>
+                                    </el-menu-item>
+                                    <el-menu-item index="/query">
+                                        <i class="el-icon-document"></i>
+                                        <span><a href="./query.html" target="my-frame">依赖查询</a></span>
+                                    </el-menu-item>
+                                </el-menu>
+                            </el-col>
+                        </el-row>
+                    </el-scrollbar>
+                </el-aside>
+                <el-main>
+                    <!-- iframe渲染路由页面 -->
+                    <iframe name="my-frame" src="./prodata.html" frameborder="0" scrolling="no" width="100%"
+                        height="100%" style="display:block;flex:1;"></iframe>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+    <script src="./js/page/index.js"></script>
+</body>
+
+</html>

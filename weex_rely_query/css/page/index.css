@@ -1,0 +1,52 @@
+html,body,#app,.el-container {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        font-family: "Helvetica Neue", "Helvetica", "PingFang SC", "Tahoma", "Arial", "sans-serif";
+    }
+
+    .el-header {
+        background-color: #23262E;
+        padding: 0 !important;
+        line-height: 60px;
+    }
+
+    .el-footer{
+        background-color: #23262E;
+        padding: 0 !important;
+        height: 30px !important;
+        line-height: 30px;
+        text-align: center;
+        color: #95969a;
+        font-size: 14px;
+    }
+
+    .el-header>.header-title {
+        width: 220px;
+        text-align: center;
+        color: #95969a;
+        font-size: 24px;
+        font-weight: 100;
+    }
+
+    .el-aside {
+        background-color: #393D49;
+        width: 220px !important;
+    }
+
+    .el-main {
+        background-color: #E9EEF3;
+        color: #333;
+        text-align: center;
+        line-height: 160px;
+    }
+
+    .el-scrollbar__wrap {
+        overflow: hidden !important;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
